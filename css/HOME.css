@@ -1,0 +1,67 @@
+.CampoCards{
+    background-color: transparent;
+}
+.CampoCards .card{
+    border: none;
+    border-radius: 0 25px 0 0;
+    max-width: 18rem !important;
+    box-shadow: 0px 3px 5px rgba(177, 177, 177, 0.119), 0px -3px 5px rgba(177, 177, 177, 0.119);
+    transition: transform 1s ease;
+}
+.CampoCards .card:hover .card-img-top {
+    border: 1px solid rgb(56, 94, 234);
+}
+.CampoCards .card:hover .CardHover {
+    display: flex;
+    animation: HoverAnimat 0.3s ease-in-out;
+}
+@keyframes HoverAnimat {
+    0% {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.CardHover{
+    display: none;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 25%;
+    left: 0;
+    width: 100%;
+    padding: 10px 5px;
+    background-color: rgba(67, 117, 146, 0.486);
+    color: rgb(255, 255, 255);
+}
+.CardHover input{
+    width: 30px;
+    border: none;
+    background-color: transparent;
+    color: white;
+}
+
+.CampoCards .card .card-body{
+   padding: 10px;
+}
+.CampoCards .card p,.CampoCards .card h5{
+    margin: 0;
+ }
+.CampoCards .card img{
+    border-radius: 0 25px;
+}
+
+
+section{
+    justify-content:space-between;
+    padding: 20px;
+}
+section .col{
+    margin-top: 20px;
+}
+.ButtonCart{
+    background-color: transparent;
+    border: none;
+}

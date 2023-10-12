@@ -28,11 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuarios = buscarUsuario();
 
     foreach ($usuarios as $usuario) {
-        // Verifique as credenciais usando a função password_verify se as senhas estiverem criptografadas
         if ($usuario['Name'] == $username &&  $usuario['Password'] ==  $password) {
             $_SESSION['usuario'] = $usuario['Name'];
 
-            header("Location: HOME.html");
+            header("Location: HOME.php");
             exit();
         }
     }

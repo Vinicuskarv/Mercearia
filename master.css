@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 body{
-    background-color: rgb(255, 255, 255) !important;
+    background-color: aliceblue !important;
 }
 .CampoTopLogin{
     background-image: url('./Img/ImgBackLogin.jpg');
@@ -75,13 +75,7 @@ header{
 aside{
     background-color:rgb(255, 255, 255);
 }
-section{
-    justify-content:space-between;
-    padding: 20px;
-}
-section .col{
-    margin-top: 20px;
-}
+
 .NavBarTop{
     background-color: rgb(67, 117, 146);
     display: flex;

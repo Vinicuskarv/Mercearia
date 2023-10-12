@@ -1,4 +1,7 @@
-
+<?php
+session_start();
+include('verifica_is_adm.php');
+?>
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -13,10 +16,17 @@
 <body>
     <nav>
         <ul class="NavBarTop">
-            <li><a href="LOGIN.html">LOGIN</a></li>
-            <li><a href="HOME.html">HOME</a></li>
+            <li><a href="LOGIN.php">LOGIN</a></li>
+            <li><a href="HOME.php">HOME</a></li>
+            <?php
+                if(isset($_SESSION['modo_adm'])):
+            ?>
             <li><a href="ADM.php">ADM</a></li>
-
+            <li><a href="logout.php">SAIR</a></li>
+            <?php
+                endif;
+                unset($_SESSION['modo_adm']);
+            ?>
         </ul>
     </nav>
     <div class="container-fluid CampoTopLogin"></div>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('conexao.php');
+include('verifica_login.php');
 
 if (isset($_SESSION['usuario'])) {
 } else {
@@ -17,16 +18,18 @@ if (isset($_SESSION['usuario'])) {
     <link rel="stylesheet" href="./master.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/master.css">
+
     <link rel="stylesheet" href="./css/ADM.css">
 
 </head>
 <body>
     <nav>
         <ul class="NavBarTop">
-            <li><a href="LOGIN.html">LOGIN</a></li>
-            <li><a href="HOME.html">HOME</a></li>
-            <li><a href="ADM.html">ADM</a></li>
+            <li><a href="LOGIN.php">LOGIN</a></li>
+            <li><a href="HOME.php">HOME</a></li>
+            <li><a href="ADM.php">ADM</a></li>
+            <li><a href="logout.php">SAIR</a></li>
+            
         </ul>
     </nav>
     <div class ="TopAdm">
@@ -40,10 +43,10 @@ if (isset($_SESSION['usuario'])) {
             <label for="username">Quantidade</label><br>
             <input type="text" name="quantidade" id="quantidade" required><br>
             <label for="username">Preço</label><br>
-            <input type="text" name="preco" id="preco" required><br>
+            <input type="float" name="preco" id="preco" required><br>
             <label for="username">Imagem</label><br>
             <input type="text" name="imagem" id="imagem" required><br>
-            <button class="ButtonMaster" type="submit">Entrar</button>
+            <button class="ButtonMaster" type="submit">Adicionar</button>
         </form>
     </div>
 

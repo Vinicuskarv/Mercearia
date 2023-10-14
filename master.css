@@ -46,6 +46,10 @@ body{
     color: rgb(255, 255, 255);
     text-shadow: none;
 } 
+.CampoTopLoginInter input:focus {
+    outline: none !important;
+}
+
 .CampoTop{
     background-image: url('./Img/ImgBack.jpg');
     background-size: cover;

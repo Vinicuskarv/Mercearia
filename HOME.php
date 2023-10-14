@@ -1,7 +1,8 @@
 <?php
 session_start();
 include('verifica_is_adm.php');
-
+$query = "SELECT * FROM produto";
+$result = mysqli_query($conexao, $query);
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -31,6 +32,8 @@ include('verifica_is_adm.php');
                 endif;
                 unset($_SESSION['modo_adm']);
             ?>
+            <button type="submit" class="ButtonCartStory"><img src="./Icons/icons8-shopping-cart-30.png" alt="produtos"><label>2</label></button>
+
         </ul>
     </nav>
     <div class="container-fluid CampoTop">
@@ -42,42 +45,46 @@ include('verifica_is_adm.php');
         
     </div>
     <header class="container CampoCards">
-        <section class="row" id="noticias-produto">
+        <section class="row" id="produtos">
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+            ?>
             <div class="col col-md-4 col-sm-6 ">
-                <div class="card ">
-                    <img src="./Img/13e873ab90ad6d139718b00561bcdb80.jpg" class="card-img-top" alt="...">
+                <div class="card">
+                    <?php
+                        $mostrarDiv = isset($_SESSION['modo_admTwo']);
+
+                        if ($mostrarDiv == 1) {
+                            echo '<form class="btnExcluirPrd" action="excluir_produto.php" method="post">
+                                <input type="hidden" name="id" id="id" value="' . $row['id'] . '" required>
+                                <button type="submit" class="buttoExcluirProduto">X</button>
+                            </form>';
+                        }
+                    ?>
+                    <div style="background-image: url('<?php echo $row['Img']; ?>')" class="card-img-top" alt="Img produto"></div>
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title"><?php echo $row['Nome']; ?></h5>
+                        <p>€ <?php echo number_format($row['Preco'], 2, '.', ','); ?></p>
+                        <div class="CardHover">
+                            <input type="number" name="quantidade" id="quantidade">
+                            <button type="submit" class="ButtonCart"><img src="./Icons/icons8-shopping-cart-30.png"  alt="Img produto"></button>
+                        </div>      
                     </div>
                 </div>
             </div>
-            
+        <?php
+            }
+        } else {
+            echo "<p>Não tem produtos.</p>";
+        }
+        ?>
         </section>
     </header>
-    <script>
-        // Função para chamar os valores com AJAX
-        function carregarProduto() {
-        // Cria uma instância do objeto XMLHttpRequest
-        var xhr = new XMLHttpRequest();
 
-        // Define a função de callback para manipular a resposta do AJAX
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-            // A resposta do AJAX foi recebida com sucesso
-            var noticiasContainer = document.getElementById("noticias-produto");
-            noticiasContainer.innerHTML = xhr.responseText;
-            }
-        };
 
-        // Faz a requisição AJAX
-        xhr.open("GET", "mostrar_produto.php", true);
-        xhr.send();
-        }
-        window.onload = function() {
-            carregarProduto();
-        };
-    </script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"crossorigin="anonymous"></script>
 </body>

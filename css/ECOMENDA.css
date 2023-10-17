@@ -1,0 +1,24 @@
+.campEcomendas{
+    position: relative;
+    top: 100px;
+    padding: 40px ;
+    border-radius: 15px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(21, 58, 179, 0.477);
+}
+.campEcomendas input{
+    background-color: transparent;
+    border: none;
+    color: white;
+    border-bottom: 1px solid white;
+}
+.campEcomendas input:focus {
+    outline: none;
+}
+.campEcomendas button{
+    background-color: rgb(56, 73, 83);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    margin-top: 10px;
+}

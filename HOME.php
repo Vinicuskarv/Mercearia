@@ -45,8 +45,9 @@ $result = mysqli_query($conexao, $query);
         <div id="CartProdutos"></div><br>
         <button class="ButtonCloseCart" onClick="FecharDivInfo()">X</button>
         <form class="campEcomendas" id="campEcomendas" action="adicionar_ecomenda.php" method="post">
+            <input type="hidden" name="Preco_total" id="Preco_total" value="">
             <input type="hidden" name="meuArrayInput" id="meuArrayInput" value="">
-            <button type="submit" class="buttoAdicionareEcomenda">Confirmar</button>
+            <button type="button" class="buttoAdicionareEcomenda" onClick="ConcluirCart()">Confirmar</button>
             <button type="button" class="buttoAdicionareEcomenda" onClick="EscluirCart()">Excluir Carrinho</button>
         </form>
         </div>
@@ -115,6 +116,11 @@ $result = mysqli_query($conexao, $query);
 
         document.getElementById('meuArrayInput').value = JSON.stringify(carrinho);
 
+        function ConcluirCart() {
+            if(carrinho.length > 0){
+                document.getElementById('campEcomendas').submit(); 
+            }
+        }
         function EscluirCart() {
             carrinho = [];
             var exibicao = document.getElementById('CartProdutos');
@@ -157,6 +163,9 @@ $result = mysqli_query($conexao, $query);
             var totalLinha = document.createElement('p');
             totalLinha.textContent = 'Preço Total: ' + precoTotalFormatado;
             exibicao.appendChild(totalLinha);
+
+            var inputPrecoTotal = document.getElementById('Preco_total');
+            inputPrecoTotal.value = precoTotalFormatado;
         }
 
 

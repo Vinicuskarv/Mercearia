@@ -46,7 +46,7 @@ $result = mysqli_query($conexao, $query);
         <button class="ButtonCloseCart" onClick="FecharDivInfo()">X</button>
         <form class="campEcomendas" id="campEcomendas" action="adicionar_ecomenda.php" method="post">
             <input type="hidden" name="Preco_total" id="Preco_total" value="">
-            <input type="hidden" name="meuArrayInput" id="meuArrayInput" value="">
+            <input type="hidden" name="meuArrayInput" id="meuArrayInput" value=''>
             <button type="button" class="buttoAdicionareEcomenda" onClick="ConcluirCart()">Confirmar</button>
             <button type="button" class="buttoAdicionareEcomenda" onClick="EscluirCart()">Excluir Carrinho</button>
         </form>
@@ -123,6 +123,7 @@ $result = mysqli_query($conexao, $query);
         }
         function EscluirCart() {
             carrinho = [];
+            PrecoTotal = 0;
             var exibicao = document.getElementById('CartProdutos');
             while (exibicao.firstChild) {
                 exibicao.removeChild(exibicao.firstChild);
@@ -148,17 +149,17 @@ $result = mysqli_query($conexao, $query);
         function atualizarExibicao(array) {
             var exibicao = document.getElementById('CartProdutos');
             exibicao.innerHTML = '';
-
+            PrecoTotal = 0;
             array.forEach(function (item) {
                 
                 var linha = document.createElement('p');
                 linha.textContent = item[3] + ', Quantidade: ' + item[1] + ', Preço: ' + item[2];
                 exibicao.appendChild(linha);
+                
+                var precoUnido = item[2] * item[1];  
+               PrecoTotal = PrecoTotal + precoUnido;
 
-                var precoUnido = item[2] * item[1];
-                PrecoTotal += precoUnido;
             });
-
             var precoTotalFormatado = PrecoTotal.toFixed(2);
             var totalLinha = document.createElement('p');
             totalLinha.textContent = 'Preço Total: ' + precoTotalFormatado;
@@ -167,8 +168,6 @@ $result = mysqli_query($conexao, $query);
             var inputPrecoTotal = document.getElementById('Preco_total');
             inputPrecoTotal.value = precoTotalFormatado;
         }
-
-
 
         function atualizarQuantidade() {
             var quantidadeItens = document.getElementById('CartNumber');
@@ -194,7 +193,6 @@ $result = mysqli_query($conexao, $query);
                     var valor = valorInput.value;
                     var nome = NomeInput.value;
                     var QAtual = quantidadeAtual.value;
-                    console.log(QAtual);
 
                     if (!isNaN(quantidade) && quantidade > 0) {
                         if (quantidade <= QAtual){
@@ -233,6 +231,11 @@ $result = mysqli_query($conexao, $query);
                 }
             });
         });
+        var mensagem = "<?php echo isset($_GET['mensagem']) ? htmlspecialchars($_GET['mensagem']) : ''; ?>";
+        
+        if (mensagem) {
+            alert(mensagem);
+        }
     </script>   
 
 

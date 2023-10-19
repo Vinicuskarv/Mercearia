@@ -1,16 +1,13 @@
 .TopAdm{
-    margin: 60px 20px;
-    background-color: rgb(255, 255, 255);
+    margin: 60px 20px 0 20px;
     text-align: left;
 }
 .CampoModifiq form{
-    max-width: 350px;
+    width: 100%;
     text-align: center;
     background-color: rgb(232, 232, 244);
     padding: 30px;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%);
+    margin-top: 10px;
 }
 .CampoModifiq form input{
     margin-bottom: 10px;

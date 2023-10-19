@@ -4,38 +4,35 @@ include 'conexao.php';
 $nome = $_POST['nome'];
 $dataNascimento = $_POST['data_nascimento'];
 $morada = $_POST['morada'];
-$produtos = $_POST['produtos']; // Dados JSON
+$produtos_encoded = $_POST['produtos'];
 $precoTotal = $_POST['Preco_total'];
 
-// Decodifique o JSON em um array associativo
-$produtosJson = json_decode($produtos, true);
 
-echo $nome;
-echo $dataNascimento;
-echo $morada;
-echo $precoTotal;
-print_r($produtosJson); // Use print_r para exibir um array no PHP
+$produtos_decoded = html_entity_decode($produtos_encoded);
+$produtosJson = json_decode($produtos_decoded, true);
+
 
 $sql = "INSERT INTO encomendas (nome, data_nascimento, morada, preco_total) VALUES ('$nome', '$dataNascimento', '$morada', '$precoTotal')";
 
 if ($conexao->query($sql) === TRUE) {
     $encomendaId = $conexao->insert_id;
+    echo $encomendaId;
 
     if ($produtosJson !== null) {
         foreach ($produtosJson as $item) {
-            // Os dados do item são acessados como $item['chave']
-            $produtoId = $item[0]; // Produto ID
-            $quantidade = $item[1]; // Quantidade
+            
+            $produtoId = $item[0];
+            $quantidade = $item[1];
 
             $sql = "INSERT INTO produtos_encomendas (encomenda_id, produto_id, quantidade) VALUES ('$encomendaId', '$produtoId', '$quantidade')";
             $conexao->query($sql);
         }
     }
-
-    echo "Encomenda registrada com sucesso!";
+    $mensagem = "Encomenda registrada com sucesso!";
 } else {
-    echo "Erro ao registrar a encomenda: " . $conexao->error;
+    $mensagem = "Erro ao registrar a encomenda. ". $conexao->error;
 }
-
+header("Location: HOME.php?mensagem=" . urlencode($mensagem));
+exit;
 $conexao->close();
 ?>

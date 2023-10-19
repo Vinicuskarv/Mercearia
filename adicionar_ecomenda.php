@@ -41,7 +41,7 @@ $ArrayJSONEdit = json_encode($ArrayJSON);
         </ul>
     </nav>
     <div>
-    <form class="container campEcomendas" action="Concluir-Compra.php" method="post">
+    <form class="container campEcomendas" action="Concluir-Compra.php" method="post" onsubmit="return validarFormulario();">
         <div>
             <h3>Produtos</h3>
 
@@ -57,7 +57,6 @@ $ArrayJSONEdit = json_encode($ArrayJSON);
             } else {
                 echo "Erro na decodificação do JSON.";
             }
-            echo $ArrayJSONEdit;
             ?>
             <br><h6>Preço Total: <?php echo $PrecoTotal ?></h6>
 
@@ -72,7 +71,7 @@ $ArrayJSONEdit = json_encode($ArrayJSON);
         <label for="endereco">Endereço:</label>
         <input type="text" id="morada" name="morada" required><br>
 
-        <input type="hidden" id="produtos" name="produtos" value="<?php echo $ArrayJSONEdit ?>" required><br>
+        <input type="hidden" id="produtos" name="produtos" value='<?php echo $ArrayJSON ?>' required><br>
 
         <input type="hidden" name="Preco_total" id="Preco_total" value="<?php echo $PrecoTotal; ?>">
 
@@ -81,7 +80,31 @@ $ArrayJSONEdit = json_encode($ArrayJSON);
 
     </div>
     <script>
+        function validarFormulario() {
+            var nome = document.getElementById("nome").value;
+            var dataNascimento = document.getElementById("data_nascimento").value;
+            var morada = document.getElementById("morada").value;
 
+            if (nome === "" || dataNascimento === "" || morada === "") {
+                alert("Nenhum dos campos pode ficar vazio.");
+                return false;
+            }
+
+            var dataNascimentoDate = new Date(dataNascimento);
+            var hoje = new Date();
+            var idade = hoje.getFullYear() - dataNascimentoDate.getFullYear();
+
+            if (hoje.getMonth() < dataNascimentoDate.getMonth() || (hoje.getMonth() === dataNascimentoDate.getMonth() && hoje.getDate() < dataNascimentoDate.getDate())) {
+                idade--;
+            }
+
+            if (idade < 18) {
+                alert("Você deve ter pelo menos 18 anos para se cadastrar.");
+                return false;
+            }
+
+            return true;
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"crossorigin="anonymous"></script>

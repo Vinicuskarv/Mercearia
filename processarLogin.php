@@ -30,12 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($usuarios as $usuario) {
         if ($usuario['Name'] == $username &&  $usuario['Password'] ==  $password) {
             $_SESSION['usuario'] = $usuario['Name'];
-
-            header("Location: HOME.php");
+            $mensagem = "Olá " . $usuario['Name'];
+            header("Location: HOME.php?mensagem=" . urlencode($mensagem));
             exit();
         }
     }
-
-    echo "Credenciais inválidas. Tente novamente.";
+    $mensagem = "Credenciais inválidas. Tente novamente.";
 }
+header("Location: LOGIN.php?mensagem=" . urlencode($mensagem));
+
 ?>

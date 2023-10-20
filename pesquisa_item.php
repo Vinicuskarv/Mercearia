@@ -10,6 +10,7 @@ if (isset($_GET["id"])) {
 
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
+        echo '<form>';
         echo '<label for="username">Produto:</label>';
         echo '<input type="text" name="name" id="name" value=' . $row["Nome"] . ' required><br> ';
         echo '<label for="username">Quantidade:</label>';
@@ -19,7 +20,7 @@ if (isset($_GET["id"])) {
         echo '<label for="username">Imagem:</label>';
         echo '<input type="text" name="imagem" id="imagem" value=' . $row["Img"] . ' required><br>';
         echo '<button class="ButtonMaster" type="submit">Editar</button>';
-
+        echo '</form>';
 
     } else {
         echo "Produto não encontrado.";

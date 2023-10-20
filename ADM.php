@@ -34,10 +34,7 @@ $result = mysqli_query($conexao, $query);
             
         </ul>
     </nav>
-    <div class ="TopAdm">
-        <h1> <?php echo "Olá " . $_SESSION['usuario'] ?> </h1>
-    </div>
-    <div class="container">
+    <div class="container campBase">
         <div class="row">
             <div class= "col CampoModifiq">
                 <form action="adicionar_produto.php" method="post">

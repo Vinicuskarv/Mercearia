@@ -13,6 +13,7 @@
     width: 100%;
     background-size: cover;
     background-position: center;
+
 }
 .CampoCards .card:hover .card-img-top {
     border: 1px solid rgb(56, 94, 234);

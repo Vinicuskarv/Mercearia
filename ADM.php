@@ -9,6 +9,9 @@ if (isset($_SESSION['usuario'])) {
 }
 $query = "SELECT * FROM produto";
 $result = mysqli_query($conexao, $query);
+$qry = "SELECT * FROM encomendas";
+$resul = mysqli_query($conexao, $qry);
+
 ?>
 
 <!DOCTYPE html>
@@ -57,10 +60,13 @@ $result = mysqli_query($conexao, $query);
                     <input type="text" name="Id" id="Id" required><br>
                     <button type="button" class="ButtonMaster" onclick="pesquisarProduto()">Pesquisar</button>
                     
+                    
+                </form>
+                <form action="editar_produto.php" method="post">
                     <div id="resultadoPesquisa">
-       
                     </div>
                 </form>
+
             </div>
         </div><br><br>
         <div class="row justify-content-center">
@@ -100,7 +106,80 @@ $result = mysqli_query($conexao, $query);
                     </table>
                 
                     </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">...</div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th>Id-Encomenda</th>
+                            <th>Nome</th>
+                            <th>Morada</th>
+                            <th>Preço</th>
+                            <th>Produtos</th>
+
+                        </tr>
+                        <?php
+                        if (mysqli_num_rows($resul) > 0) {
+                            while ($roW = mysqli_fetch_assoc($resul)) {
+                                $idCopara = $roW['id'];
+                        ?>
+                        <tr>
+                            <td><?php echo $roW['id']; ?></td>
+                            <td><?php echo $roW['nome']; ?></td>
+                            <td><?php echo $roW['morada']; ?></td>
+                            <td><?php echo number_format($roW['preco_total'], 2, '.', ',');?></td>
+                            <td>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample<?php echo $roW['id']; ?>" role="button" aria-expanded="false" aria-controls="collapseExample<?php echo $roW['id']; ?>">
+                                    Lista-<?php echo $roW['id']; 
+                                    $valor = $roW['id'];
+                                    ?>
+                                </a>
+                            </td>
+                            
+                        </tr>
+                        <div class="collapse" id="collapseExample<?php echo $roW['id']; ?>">
+                            <?php echo $valor; ?>
+
+                            <div class="card card-body">
+                            <h4><?php echo $roW['nome']; ?></h4>
+                            <ol>
+                            <?php
+                                $qery = "SELECT * FROM produtos_encomendas WHERE encomenda_id = $valor";
+                                $resu = mysqli_query($conexao, $qery);
+                                if (mysqli_num_rows($resu) > 0) {
+                                    while ($rw = mysqli_fetch_assoc($resu)) {
+                                        $requi = "SELECT * FROM produto WHERE id = " . $rw['produto_id'];
+                                        $pesqui = mysqli_query($conexao, $requi);
+                                        
+                                        if ($pesqui && mysqli_num_rows($pesqui) > 0) {
+                                            $produto = mysqli_fetch_assoc($pesqui);
+                                            $nomeProduto = $produto['Nome'];
+                                            $precoProduto = $produto['Preco'];
+
+                                        } else {
+                                            $nomeProduto = "Produto não encontrado";
+                                        }
+                                ?>
+                                        <li>Produto: <?php echo $nomeProduto; ?>, Quantidade: <?php echo $rw['quantidade']; ?>, Preço:<?php echo $precoProduto; ?>€</li>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<p>Não tem produtos.</p>";
+                                }
+                                ?>
+                            </ol>
+                        </div>
+
+                        </div>
+                       
+
+                    <?php
+                        }
+                        } else {
+                            echo "<p>Não tem produtos.</p>";
+                        }
+                    ?>
+                    </table>
+                    </div>
+
                 <div>
             </div>
         <div>
